@@ -1,0 +1,37 @@
+body {
+			margin: 40px auto;
+			max-width: 650px;
+			line-height: 1.62;
+			font-size: 18px;
+			color: #434343;
+			padding: 0 10px;
+			position: relative;
+			padding-bottom: 30px;
+			font-kerning: auto;
+			text-rendering: optimizeLegibility;
+			background-color: #fdfdfa;
+			text-shadow: 0 0 1px rgba(51,51,51,0.2);
+			font-family:serif;
+		}
+
+.content-editable-toolbar{
+	display: none;	
+}
+
+		.content-editable {
+			cursor: pointer;
+			border: none;
+		}
+
+			.content-editable:focus {
+				cursor: text;
+				outline-offset: 10px !important;
+				outline-style: dotted;
+				outline-width: thin;
+				outline-color: #777;
+			}
+
+
+		.content-editable img{
+			max-width: 100%;
+		}
