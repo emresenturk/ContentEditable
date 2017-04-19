@@ -162,7 +162,7 @@
 		toolbar.id = guid();
 		element.dataset.toolbar = toolbar.id;
 		toolbar.classList.add("content-editable-toolbar");
-		toolbar.innerHTML = "<button name=\"inserth1\">h1</button><button name=\"inserth2\">h2</button><button name=\"inserth3\">h3</button><button name=\"insertTable\">table</button><button name=\"insertImage\">image</button><button name=\"insertCode\">code</button>";
+		toolbar.innerHTML = "<button name=\"insertA\">anchor</button><button name=\"inserth1\">h1</button><button name=\"inserth2\">h2</button><button name=\"inserth3\">h3</button><button name=\"insertTable\">table</button><button name=\"insertImage\">image</button><button name=\"insertCode\">code</button>";
 		toolbar.querySelector("[name=inserth1]").onclick = function (event) {
 			var header = root.document.createElement("h1");
 			header.innerText = "Like you can write H1...";
@@ -248,12 +248,32 @@
 			selectElementContents(figCaption);			
 		}
 
+		toolbar.querySelector("[name=insertA]").onclick = function(event){
+			var anchor = root.document.createElement("a");
+			var href = prompt("href");
+			if(href === null){
+				return;
+			}
+
+			var label = prompt(label);
+			if(label === null){
+				return;
+			}
+
+			anchor.href = href;
+			anchor.innerHTML = label;
+			insertElementAtCaret(root.getSelection(), anchor, element);
+		}
+
 		return toolbar;
 	}
 
 	function transformElement(element, options) {
 		element.setAttribute("contenteditable", true);
 		element.classList.add("content-editable");
+		if(element.childElementCount === 0){
+			element.innerHTML = "<p>Start here...</p>";
+		}
 		var toolbar = createToolbar(element);
 		element.parentNode.insertBefore(toolbar, element.nextSibling);
 		var observer = new MutationObserver(function (mutations) {
@@ -279,7 +299,6 @@
 				}
 			}
 			else{
-				console.log(event.keyCode);
 			}
 		}
 
@@ -304,7 +323,13 @@
 
 	}
 
-	function insertElementAfterCaretNode(selection, element, container) {
+	function insertElementAfterCaretNode(selection, element, container, inline) {
+		if(inline && selection.anchorNode.nodeType === 3){
+			selection.anchorNode.parentNode.appendChild(element);
+			// selection.anchorNode.parentNode.appendChild(element);
+			return;
+		}
+
 		if(selection.anchorNode === container){
 			container.removeChild(container.querySelector("p"));
 			container.insertBefore(element, null);
@@ -314,8 +339,23 @@
 			container.removeChild(selection.anchorNode);
 		}
 		else{
-			container.insertBefore(element, selection.anchorNode.parentNode.nextSibling);
+			// if(selection.anchorNode.parentNode.style.display === "block"){
+				if(selection.anchorNode.parentNode.nextSibling && selection.anchorNode.parentNode.nextSibling.nodeType !== 3){
+					container.insertBefore(element, selection.anchorNode.parentNode.nextSibling);}
+				else{
+					container.appendChild(element);
+				}
+			// }
+			// else{
+			// 	selection.anchorNode.parentNode.parentNode.parentNode.appendChild(element);
+			// }
+			
 		}
+	}
+
+	function insertElementAtCaret(selection, element, container){
+		var range = selection.getRangeAt(0);
+		range.insertNode(element);
 	}
 
 	function selectElementContents(element) {

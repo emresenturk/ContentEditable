@@ -1,8 +1,8 @@
 body {
 			margin: 40px auto;
 			max-width: 650px;
-			line-height: 1.62;
-			font-size: 18px;
+			line-height: 1.62em;
+			font-size: 20px;
 			color: #434343;
 			padding: 0 10px;
 			position: relative;
@@ -34,4 +34,50 @@ body {
 
 		.content-editable img{
 			max-width: 100%;
+		}
+
+
+		.content-editable table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+			.content-editable table th, .content-editable table td {
+				padding: 0.6em;
+			}
+
+			.content-editable  table th {
+				text-align: left;
+				border-bottom: 2px solid #666;
+			}
+
+			.content-editable  table td{
+				border-bottom: 1px solid #777;
+				vertical-align: top;
+			}
+
+			.content-editable table caption{
+				font-size: 0.8em;
+			}
+
+			.content-editable figcaption{
+				font-size: 0.8em;
+			}
+
+			.content-editable figure{
+				text-align: center;
+				margin-left: 0px;
+				margin-right: 0px;
+			}
+			.content-editable pre{
+				font-size: 0.7em;
+				background-color: #eee;
+				padding: 0.6em;
+				text-align: initial;
+				overflow: scroll;
+			}
+
+		.content-editable a, .content-editable a:hover, .content-editable a:visited{
+			color:inherit;
+			opacity: 0.9;
 		}
