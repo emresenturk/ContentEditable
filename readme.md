@@ -12,4 +12,3 @@ then get selector for your favorite article element and initiate the editor like
 var editor = new ContentEditable("#TheSelector");
 </script>
 ```
-## How to use
